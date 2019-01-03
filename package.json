@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "sass": "node-sass --include-path node_modules/accoutrement -watch scss src/test.scss src/test.css",
+    "build": "node build.js"
+  },
+  "dependencies": {
+    "accoutrement": "^2.1.0",
+    "node-sass": "^4.9.4"
+  }
+}

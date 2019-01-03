@@ -1,0 +1,148 @@
+// core and all plugins (also available with `/index`)
+@import 'sass/tools';
+
+// init normalization
+@import 'sass/init';
+
+$functions: map-merge( $functions, (
+    'lighten': get-function( 'lighten' ),
+) );
+
+$colors: (
+    P1: rgb(25, 129, 139),
+
+    ui: (
+        // short-hand syntax
+        // h1 and h3 should produce identical values, while h2 is different
+        h1: (
+            color: rgb(25, 129, 139) ( tint: 60, lighten: 20% ),
+        ),
+        h2: (
+            color: rgb(25, 129, 139) ( lighten: 20%, tint: 60 ),
+        ),
+        h3: (
+            color: rgb(25, 129, 139) ( tint: 60, lighten: 20% ),
+        ),
+
+        // long-hand syntax
+        // h4 and h6 should produce identical values, while h5 is different
+        h4: (
+            color: (
+                '%value': rgb(25, 129, 139),
+                tint: 60,
+                lighten: 20%
+            ),
+        ),
+        h5: (
+            color: (
+                '%value': rgb(25, 129, 139),
+                lighten: 20%,
+                tint: 60
+            ),
+        ),
+        h6: (
+            color: (
+                '%value': rgb(25, 129, 139),
+                tint: 60,
+                lighten: 20%
+            ),
+        ),
+    )
+);
+
+// dig into the map for the raw color values
+$debugRaw1: map-get( map-get( map-get( $colors, 'ui' ), 'h1' ), 'color' );
+$debugRaw2: map-get( map-get( map-get( $colors, 'ui' ), 'h2' ), 'color' );
+$debugRaw3: map-get( map-get( map-get( $colors, 'ui' ), 'h3' ), 'color' );
+$debugRaw4: map-get( map-get( map-get( $colors, 'ui' ), 'h4' ), 'color' );
+$debugRaw5: map-get( map-get( map-get( $colors, 'ui' ), 'h5' ), 'color' );
+$debugRaw6: map-get( map-get( map-get( $colors, 'ui' ), 'h6' ), 'color' );
+
+// note: convert to string values because SASS appears to be smart enough to ignore key order when left as maps
+$rawCompare12: quote( $debugRaw1 ) != quote( $debugRaw2 );
+$rawCompare13: quote( $debugRaw1 ) == quote( $debugRaw3 );
+$rawCompare45: quote( $debugRaw4 ) != quote( $debugRaw5 );
+$rawCompare46: quote( $debugRaw4 ) == quote( $debugRaw6 );
+
+$debug1: color( 'ui->h1->color' );
+$debug2: color( 'ui->h2->color' );
+$debug3: color( 'ui->h3->color' );
+$debug4: color( 'ui->h4->color' );
+$debug5: color( 'ui->h5->color' );
+$debug6: color( 'ui->h6->color' );
+
+$compare12: $debug1 != $debug2;
+$compare13: $debug1 == $debug3;
+$compare45: $debug4 != $debug5;
+$compare46: $debug4 == $debug6;
+
+$compareCompare12: $rawCompare12 == $compare12;
+$compareCompare13: $rawCompare13 == $compare13;
+$compareCompare45: $rawCompare45 == $compare45;
+$compareCompare46: $rawCompare46 == $compare46;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@debug '';
+@debug 'Raw map-get values';
+@debug '==================';
+@debug 'short-hand syntax expects h1 != h2, h1 == h3';
+@debug '---';
+@debug 'h1: #{ $debugRaw1 }';
+@debug 'h2: #{ $debugRaw2 }';
+@debug 'h3: #{ $debugRaw3 }';
+@debug '';
+@debug 'long-hand syntax expects h4 != h5, h4 == h6';
+@debug '---';
+@debug 'h4: #{ $debugRaw4 }';
+@debug 'h5: #{ $debugRaw5 }';
+@debug 'h6: #{ $debugRaw6 }';
+@debug '';
+@debug 'Get token values w/ color()';
+@debug '===========================';
+@debug 'short-hand syntax expects h1 != h2, h1 == h3';
+@debug '---';
+@debug 'h1: #{ $debug1 }';
+@debug 'h2: #{ $debug2 }';
+@debug 'h3: #{ $debug3 }';
+@debug '';
+@debug 'long-hand syntax expects h4 != h5, h4 == h6';
+@debug '---';
+@debug 'h4: #{ $debug4 }';
+@debug 'h5: #{ $debug5 }';
+@debug 'h6: #{ $debug6 }';
+@debug '';
+@debug 'Raw value compares';
+@debug '==================';
+@debug 'h1 != h2: #{ $rawCompare12 } #{ if( $rawCompare12, " | √ PASS", "| x FAIL" ) }';
+@debug 'h1 == h3: #{ $rawCompare13 } #{ if( $rawCompare13, " | √ PASS", "| x FAIL" ) }';
+@debug 'h4 != h5: #{ $rawCompare45 } #{ if( $rawCompare45, " | √ PASS", "| x FAIL" ) }';
+@debug 'h4 == h6: #{ $rawCompare46 } #{ if( $rawCompare46, " | √ PASS", "| x FAIL" ) }';
+@debug '';
+@debug 'Token value compares';
+@debug '====================';
+@debug 'h1 != h2: #{ $compare12 } #{ if( $compare12, " | √ PASS", "| x FAIL" ) }';
+@debug 'h1 == h3: #{ $compare13 } #{ if( $compare13, " | √ PASS", "| x FAIL" ) }';
+@debug 'h4 != h5: #{ $compare45 } #{ if( $compare45, " | √ PASS", "| x FAIL" ) }';
+@debug 'h4 == h6: #{ $compare46 } #{ if( $compare46, " | √ PASS", "| x FAIL" ) }';
+@debug '';
+@debug 'Raw/Token correlation';
+@debug '====================';
+@debug 'h1 != h2: #{ $compareCompare12 } #{ if( $compareCompare12, " | √ PASS", "| x FAIL" ) }';
+@debug 'h1 == h3: #{ $compareCompare13 } #{ if( $compareCompare13, " | √ PASS", "| x FAIL" ) }';
+@debug 'h4 != h5: #{ $compareCompare45 } #{ if( $compareCompare45, " | √ PASS", "| x FAIL" ) }';
+@debug 'h4 == h6: #{ $compareCompare46 } #{ if( $compareCompare46, " | √ PASS", "| x FAIL" ) }';
