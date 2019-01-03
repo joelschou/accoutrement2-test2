@@ -4,9 +4,7 @@
 // init normalization
 @import 'sass/init';
 
-$functions: map-merge( $functions, (
-    'lighten': get-function( 'lighten' ),
-) );
+@include register-function( 'lighten' );
 
 $colors: (
     P1: rgb(25, 129, 139),
@@ -80,6 +78,8 @@ $compareCompare12: $rawCompare12 == $compare12;
 $compareCompare13: $rawCompare13 == $compare13;
 $compareCompare45: $rawCompare45 == $compare45;
 $compareCompare46: $rawCompare46 == $compare46;
+
+
 
 
 
