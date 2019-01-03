@@ -1,4 +1,4 @@
-Testing shorthand vs. longhand adjustment maps in Accoutrement 2.
+Testing shorthand vs. longhand adjustment maps in [Accoutrement](https://github.com/oddbird/accoutrement).
 
 `yarn install`
 
