@@ -5,6 +5,6 @@
   },
   "dependencies": {
     "accoutrement": "^2.1.0",
-    "node-sass": "^4.9.4"
+    "node-sass": "^4.13.1"
   }
 }
